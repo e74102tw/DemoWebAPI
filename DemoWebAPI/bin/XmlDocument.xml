@@ -529,5 +529,45 @@
             回傳電腦名稱
             </summary>
         </member>
+        <member name="P:DemoWebAPI.Models.CustomerModel.C_Seq">
+            <summary>
+            序號
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerModel.CustID">
+            <summary>
+            身分證字號
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerModel.CustFirstName">
+            <summary>
+            名稱
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerModel.CustLastName">
+            <summary>
+            姓氏
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerModel.CustFullName">
+            <summary>
+            全名
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerModel.Sex">
+            <summary>
+            性別 M:男性/F:女性
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerModel.TelNo">
+            <summary>
+            電話
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerModel.BirthDate">
+            <summary>
+            生日
+            </summary>
+        </member>
     </members>
 </doc>

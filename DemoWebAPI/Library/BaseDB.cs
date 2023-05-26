@@ -37,7 +37,7 @@ namespace DemoWebAPI.Library
         /// <param name="sql">SQL Text</param>
         /// <param name="parm">parameter</param>
         /// <returns>IEnumerable<T></returns>
-        public IEnumerable<T> Query<T>(string sql, object parm)
+        public IEnumerable<T> Query<T>(string sql, object parm = null)
         {
             using (IDbConnection db = new SqlConnection(DBConnStr))
             {
@@ -87,9 +87,9 @@ namespace DemoWebAPI.Library
             }
         }
     }
-    public class DB_MarkDB : BaseDb
+    public class DB_DemoDB : BaseDb
     {
-        public DB_MarkDB() : base("MarkDB")
+        public DB_DemoDB() : base("DemoDB")
         {
         }
     }

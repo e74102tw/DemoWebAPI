@@ -1,0 +1,12 @@
+﻿.swagger-section #logo {
+    display: none;
+}
+.swagger-section #api_selector #input_baseUrl {
+    width: 800px;
+}
+.swagger-section #api_selector #input_apiKey {
+    display: none;
+}
+.swagger-section #api_selector #explore {
+    display: none;
+}

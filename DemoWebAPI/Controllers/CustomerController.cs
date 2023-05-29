@@ -78,7 +78,7 @@ public class CustomerController : BaseApiController
         return resp;
     }
 
-    // GET: api/Customer/5
+    // GET: api/Customer/{Seq}
     public ActionResponseModel<CustomerDataModel> Get(int Seq)
     {
         string guid = Guid.NewGuid().ToString();
@@ -169,7 +169,7 @@ public class CustomerController : BaseApiController
                 CustFirstName = model.CustFirstName,
                 CustLastName = model.CustLastName,
                 CustFullName = model.CustFullName,
-                Sex = model.Sex,
+                Sex = model.Sex.ToUpper(),
                 TelNo = model.TelNo,
                 BirthDate = model.BirthDate
             };
@@ -204,7 +204,7 @@ public class CustomerController : BaseApiController
         return resp;
     }
 
-    // PUT: api/Customer/5
+    // PUT: api/Customer
     public ActionResponseModel<CustomerPutResponseModel> Put([FromBody] CustomerPutRequestModel model)
     {
         string guid = Guid.NewGuid().ToString();
@@ -237,7 +237,7 @@ public class CustomerController : BaseApiController
                 CustFirstName = model.CustFirstName,
                 CustLastName = model.CustLastName,
                 CustFullName = model.CustFullName,
-                Sex = model.Sex,
+                Sex = model.Sex.ToUpper(),
                 TelNo = model.TelNo,
                 BirthDate = model.BirthDate
             };
@@ -274,7 +274,7 @@ public class CustomerController : BaseApiController
         return resp;
     }
 
-    // DELETE: api/Customer/5
+    // DELETE: api/Customer/{Seq}
     public ActionResponseModel<int> Delete(int Seq)
     {
         string guid = Guid.NewGuid().ToString();

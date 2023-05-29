@@ -29,7 +29,8 @@ namespace DemoWebAPI.Library
         public static string GetClientIP(this HttpRequestMessage sender)
         {
             object l_Value;
-
+            if(sender == null)
+                return null;
             if (sender.Properties.TryGetValue("MS_HttpContext", out l_Value))
                 return ((HttpContextWrapper)l_Value).Request.UserHostAddress;
             else if (sender.Properties.TryGetValue(RemoteEndpointMessageProperty.Name, out l_Value))

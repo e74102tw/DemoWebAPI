@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DemoWebAPI.Models
 {
@@ -65,6 +61,7 @@ namespace DemoWebAPI.Models
         /// 序號
         /// </summary>
         [Required(ErrorMessage = "請輸入Seq")]
+        [Range(1,int.MaxValue, ErrorMessage = "Seq輸入錯誤")]
         public int C_Seq { get; set; }
         /// <summary>
         /// 身分證字號

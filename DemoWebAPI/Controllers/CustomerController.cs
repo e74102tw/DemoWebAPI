@@ -21,13 +21,13 @@ using System.Reflection;
 public class CustomerController : BaseApiController
 {
     // GET: api/Customer
-    public ActionResponseModel<List<CustomerModel>> GetAll ()
+    public ActionResponseModel<List<CustomerDataModel>> GetAllCustomers ()
     {
         string guid = Guid.NewGuid().ToString();
         // 設定目前執行的 Function 名稱
         string m_Function = string.Format("{0}/{1}", this.GetType().Name, MethodBase.GetCurrentMethod().Name);
         // 初始化回傳的物件
-        ActionResponseModel<List<CustomerModel>> resp = new ActionResponseModel<List<CustomerModel>>();
+        ActionResponseModel<List<CustomerDataModel>> resp = new ActionResponseModel<List<CustomerDataModel>>();
         try
         {
             // 寫入開始訊息到 Log
@@ -38,7 +38,7 @@ public class CustomerController : BaseApiController
             ResponseModel responseModelTemp = new ResponseModel();
             DB_DemoDB db = new DB_DemoDB();
             string sQuery = "SELECT * FROM TB_Customer";
-            List<CustomerModel> qryCustomers = db.Query<CustomerModel>(sQuery).ToList();
+            List<CustomerDataModel> qryCustomers = db.Query<CustomerDataModel>(sQuery).ToList();
             if (qryCustomers == null)
             {
                 resp.ResultCode = (int)ResultCode.NoData;
@@ -79,13 +79,13 @@ public class CustomerController : BaseApiController
     }
 
     // GET: api/Customer/5
-    public ActionResponseModel<CustomerModel> Get(int Seq)
+    public ActionResponseModel<CustomerDataModel> Get(int Seq)
     {
         string guid = Guid.NewGuid().ToString();
         // 設定目前執行的 Function 名稱
         string m_Function = string.Format("{0}/{1}", this.GetType().Name, MethodBase.GetCurrentMethod().Name);
         // 初始化回傳的物件
-        ActionResponseModel<CustomerModel> resp = new ActionResponseModel<CustomerModel>();
+        ActionResponseModel<CustomerDataModel> resp = new ActionResponseModel<CustomerDataModel>();
         try
         {
             // 寫入開始訊息到 Log
@@ -93,10 +93,11 @@ public class CustomerController : BaseApiController
             // 記錄 Request 的相關資訊到 Log
             LogHelper.LogProvider.Info(string.Format("{0} REQ: {1}", m_Function, Request.GetClientIP()));
             LogHelper.LogProvider.DumpTrace(Enum_DumpSendType.Request, m_ControllerName, m_Function, m_Function, guid, $"Seq:{Seq}");
-            ResponseModel responseModelTemp = new ResponseModel();
+            if (Seq <= 0)
+                throw new CustomAcitonException(ResultCode.WrongArgument, @"參數錯誤:Seq");
             DB_DemoDB db = new DB_DemoDB();
             string sQuery = "SELECT * FROM TB_Customer WHERE C_Seq = @C_Seq";
-            CustomerModel qryCustomer = db.Query<CustomerModel>(sQuery, new { C_Seq = Seq }).FirstOrDefault();
+            CustomerDataModel qryCustomer = db.Query<CustomerDataModel>(sQuery, new { C_Seq = Seq }).FirstOrDefault();
             if (qryCustomer == null)
             {
                 resp.ResultCode = (int)ResultCode.NoData;
@@ -136,32 +137,49 @@ public class CustomerController : BaseApiController
     }
 
     // POST: api/Customer
-    public ActionResponseModel<CustomerModel> Post([FromBody] CustomerModel customer)
+    public ActionResponseModel<CustomerPostResponseModel> Post([FromBody] CustomerPostRequestModel model)
     {
         string guid = Guid.NewGuid().ToString();
         // 設定目前執行的 Function 名稱
         string m_Function = string.Format("{0}/{1}", this.GetType().Name, MethodBase.GetCurrentMethod().Name);
         // 初始化回傳的物件
-        ActionResponseModel<CustomerModel> resp = new ActionResponseModel<CustomerModel>();
+        ActionResponseModel<CustomerPostResponseModel> resp = new ActionResponseModel<CustomerPostResponseModel>();
+        CustomerPostResponseModel detail = new CustomerPostResponseModel();
         try
         {
             // 寫入開始訊息到 Log
             LogHelper.LogProvider.Info(string.Format("{0} START", m_Function));
             // 記錄 Request 的相關資訊到 Log
             LogHelper.LogProvider.Info(string.Format("{0} REQ: {1}", m_Function, Request.GetClientIP()));
-            LogHelper.LogProvider.DumpTrace(Enum_DumpSendType.Request, m_ControllerName, m_Function, m_Function, guid, customer);
+            LogHelper.LogProvider.DumpTrace(Enum_DumpSendType.Request, m_ControllerName, m_Function, m_Function, guid, model);
+            // 驗證 Model 是否符合規範
             ResponseModel responseModelTemp = new ResponseModel();
+            Methods.BaseValidation(ModelState, model, responseModelTemp);
+            if (responseModelTemp.ResultCode == (int)ResultCode.WrongArgument)
+                throw new CustomAcitonException(ResultCode.WrongArgument, responseModelTemp.ErrorMessage);
+            // 初始化 Model 屬性的預設值
+            model.InitializePropertyDefaultValues();
             DB_DemoDB db = new DB_DemoDB();
             string sQuery = "INSERT INTO TB_Customer (CustID, CustFirstName, CustLastName, CustFullName, Sex, TelNo, BirthDate)"
                             + " VALUES(@CustID, @CustFirstName, @CustLastName, @CustFullName, @Sex, @TelNo, @BirthDate);"
                             + " SELECT CAST(SCOPE_IDENTITY() as int)";
-            var id = db.Query<int>(sQuery, customer).Single();
-            customer.C_Seq = id;
+            var parameters = new
+            {
+                CustID = model.CustID,
+                CustFirstName = model.CustFirstName,
+                CustLastName = model.CustLastName,
+                CustFullName = model.CustFullName,
+                Sex = model.Sex,
+                TelNo = model.TelNo,
+                BirthDate = model.BirthDate
+            };
+            var id = db.Query<int>(sQuery, parameters).Single();
+            detail.C_Seq = id;
             // 回傳成功訊息
             resp.ResultCode = (int)ResultCode.Success;
             resp.ErrorMessage = "";
             resp.Exception = null;
-            resp.Content = customer;
+            resp.Content = detail;
         }
         catch (CustomAcitonException exAction)
         {
@@ -187,31 +205,51 @@ public class CustomerController : BaseApiController
     }
 
     // PUT: api/Customer/5
-    public ActionResponseModel<CustomerModel> Put(int Seq, [FromBody] CustomerModel customer)
+    public ActionResponseModel<CustomerPutResponseModel> Put([FromBody] CustomerPutRequestModel model)
     {
         string guid = Guid.NewGuid().ToString();
         // 設定目前執行的 Function 名稱
         string m_Function = string.Format("{0}/{1}", this.GetType().Name, MethodBase.GetCurrentMethod().Name);
         // 初始化回傳的物件
-        ActionResponseModel<CustomerModel> resp = new ActionResponseModel<CustomerModel>();
+        ActionResponseModel<CustomerPutResponseModel> resp = new ActionResponseModel<CustomerPutResponseModel>();
+        CustomerPutResponseModel detail = new CustomerPutResponseModel();
         try
         {
             // 寫入開始訊息到 Log
             LogHelper.LogProvider.Info(string.Format("{0} START", m_Function));
             // 記錄 Request 的相關資訊到 Log
             LogHelper.LogProvider.Info(string.Format("{0} REQ: {1}", m_Function, Request.GetClientIP()));
-            customer.C_Seq = Seq;
-            LogHelper.LogProvider.DumpTrace(Enum_DumpSendType.Request, m_ControllerName, m_Function, m_Function, guid, customer);
+            LogHelper.LogProvider.DumpTrace(Enum_DumpSendType.Request, m_ControllerName, m_Function, m_Function, guid, model);
+            // 驗證 Model 是否符合規範
             ResponseModel responseModelTemp = new ResponseModel();
-            DB_DemoDB db = new DB_DemoDB();
-            
+            Methods.BaseValidation(ModelState, model, responseModelTemp);
+            if (responseModelTemp.ResultCode == (int)ResultCode.WrongArgument)
+                throw new CustomAcitonException(ResultCode.WrongArgument, responseModelTemp.ErrorMessage);
+            // 初始化 Model 屬性的預設值
+            model.InitializePropertyDefaultValues();
+
+            DB_DemoDB db = new DB_DemoDB();           
             string sQuery = "UPDATE TB_Customer SET CustID = @CustID, CustFirstName = @CustFirstName, CustLastName = @CustLastName, CustFullName = @CustFullName, Sex = @Sex, TelNo = @TelNo, BirthDate = @BirthDate WHERE C_Seq = @C_Seq";
-            db.Execute(sQuery, customer);
+            var parameters = new
+            {
+                C_Seq = model.C_Seq,
+                CustID = model.CustID,
+                CustFirstName = model.CustFirstName,
+                CustLastName = model.CustLastName,
+                CustFullName = model.CustFullName,
+                Sex = model.Sex,
+                TelNo = model.TelNo,
+                BirthDate = model.BirthDate
+            };
+
+            if (db.Execute(sQuery, parameters) <= 0)
+                throw new CustomAcitonException(ResultCode.Fail, "更新失敗!");
+            detail.C_Seq = model.C_Seq;
             // 回傳成功訊息
             resp.ResultCode = (int)ResultCode.Success;
             resp.ErrorMessage = "";
             resp.Exception = null;
-            resp.Content = customer;
+            resp.Content = detail;
         }
         catch (CustomAcitonException exAction)
         {
@@ -251,10 +289,12 @@ public class CustomerController : BaseApiController
             // 記錄 Request 的相關資訊到 Log
             LogHelper.LogProvider.Info(string.Format("{0} REQ: {1}", m_Function, Request.GetClientIP()));
             LogHelper.LogProvider.DumpTrace(Enum_DumpSendType.Request, m_ControllerName, m_Function, m_Function, guid, $"Seq:{Seq}");
-            ResponseModel responseModelTemp = new ResponseModel();
+            if (Seq <= 0)
+                throw new CustomAcitonException(ResultCode.WrongArgument, @"參數錯誤:Seq");
             DB_DemoDB db = new DB_DemoDB();
-            string sQuery = "DELETE FROM TB_Customer WHERE C_Seq = @C_Seq";
-            db.Execute(sQuery, new { C_Seq = Seq });
+            string sQuery = "DELETE FROM TB_Customer WHERE C_Seq = @C_Seq";           
+            if (db.Execute(sQuery, new { C_Seq = Seq }) <= 0)
+                throw new CustomAcitonException(ResultCode.Fail, "刪除失敗!");
             // 回傳成功訊息
             resp.ResultCode = (int)ResultCode.Success;
             resp.ErrorMessage = "";

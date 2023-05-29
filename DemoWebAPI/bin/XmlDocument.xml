@@ -529,44 +529,129 @@
             回傳電腦名稱
             </summary>
         </member>
-        <member name="P:DemoWebAPI.Models.CustomerModel.C_Seq">
+        <member name="P:DemoWebAPI.Models.CustomerDataModel.C_Seq">
             <summary>
             序號
             </summary>
         </member>
-        <member name="P:DemoWebAPI.Models.CustomerModel.CustID">
+        <member name="P:DemoWebAPI.Models.CustomerDataModel.CustID">
             <summary>
             身分證字號
             </summary>
         </member>
-        <member name="P:DemoWebAPI.Models.CustomerModel.CustFirstName">
+        <member name="P:DemoWebAPI.Models.CustomerDataModel.CustFirstName">
             <summary>
             名稱
             </summary>
         </member>
-        <member name="P:DemoWebAPI.Models.CustomerModel.CustLastName">
+        <member name="P:DemoWebAPI.Models.CustomerDataModel.CustLastName">
             <summary>
             姓氏
             </summary>
         </member>
-        <member name="P:DemoWebAPI.Models.CustomerModel.CustFullName">
+        <member name="P:DemoWebAPI.Models.CustomerDataModel.CustFullName">
             <summary>
             全名
             </summary>
         </member>
-        <member name="P:DemoWebAPI.Models.CustomerModel.Sex">
+        <member name="P:DemoWebAPI.Models.CustomerDataModel.Sex">
             <summary>
             性別 M:男性/F:女性
             </summary>
         </member>
-        <member name="P:DemoWebAPI.Models.CustomerModel.TelNo">
+        <member name="P:DemoWebAPI.Models.CustomerDataModel.TelNo">
             <summary>
             電話
             </summary>
         </member>
-        <member name="P:DemoWebAPI.Models.CustomerModel.BirthDate">
+        <member name="P:DemoWebAPI.Models.CustomerDataModel.BirthDate">
             <summary>
             生日
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPostRequestModel.CustID">
+            <summary>
+            身分證字號
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPostRequestModel.CustFirstName">
+            <summary>
+            名稱
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPostRequestModel.CustLastName">
+            <summary>
+            姓氏
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPostRequestModel.CustFullName">
+            <summary>
+            全名
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPostRequestModel.Sex">
+            <summary>
+            性別 M:男性/F:女性
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPostRequestModel.TelNo">
+            <summary>
+            電話
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPostRequestModel.BirthDate">
+            <summary>
+            生日
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPostResponseModel.C_Seq">
+            <summary>
+            序號
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPutRequestModel.C_Seq">
+            <summary>
+            序號
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPutRequestModel.CustID">
+            <summary>
+            身分證字號
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPutRequestModel.CustFirstName">
+            <summary>
+            名稱
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPutRequestModel.CustLastName">
+            <summary>
+            姓氏
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPutRequestModel.CustFullName">
+            <summary>
+            全名
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPutRequestModel.Sex">
+            <summary>
+            性別 M:男性/F:女性
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPutRequestModel.TelNo">
+            <summary>
+            電話
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPutRequestModel.BirthDate">
+            <summary>
+            生日
+            </summary>
+        </member>
+        <member name="P:DemoWebAPI.Models.CustomerPutResponseModel.C_Seq">
+            <summary>
+            序號
             </summary>
         </member>
     </members>

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DemoWebAPI.Models
 {
-    public class CustomerModel
+    public class CustomerDataModel
     {
         /// <summary>
         /// 序號

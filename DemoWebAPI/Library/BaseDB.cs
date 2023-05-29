@@ -13,6 +13,7 @@ namespace DemoWebAPI.Library
         public BaseDb(string sDBName)
         {
             SqlConnectionStringBuilder sbConnStr = DBHelper.GetConnectionStringBuilder(sDBName);
+            sbConnStr.Password = Cipher.Decrypt(sbConnStr.Password);
             DBConnStr = sbConnStr.ConnectionString;
         }
 

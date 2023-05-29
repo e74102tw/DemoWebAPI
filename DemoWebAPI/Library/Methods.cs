@@ -167,18 +167,21 @@ namespace DemoWebAPI
             {
                 if (ModelState.IsValid == false)
                 {
-                    string sErrMSG = "";
+                    StringBuilder sbErrMSG = new StringBuilder();
                     foreach (var item in ModelState)
                     {
                         if (!ModelState.IsValidField(item.Key))
                         {
                             foreach (ModelError modelErr in item.Value.Errors)
                             {
-                                sErrMSG = string.Format("{0}{1}", sErrMSG.Trim(), modelErr.ErrorMessage);
+                                sbErrMSG.AppendLine(string.Format("{0}", modelErr.ErrorMessage));
                             }
                         }
                     }
-                    response.ErrorMessage = "參數不正確:" + sErrMSG;
+                    //移除結尾換行符號
+                    if (sbErrMSG.Length > 0)
+                        sbErrMSG.Remove(sbErrMSG.Length - Environment.NewLine.Length, Environment.NewLine.Length);
+                    response.ErrorMessage = "參數不正確:" + sbErrMSG.ToString();
                 }
                 else
                 {

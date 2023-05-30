@@ -654,5 +654,39 @@
             序號
             </summary>
         </member>
+        <member name="M:CustomerController.GetAllCustomers">
+            <summary>
+            取得所有客戶資料
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CustomerController.Get(System.Int32)">
+            <summary>
+            取得客戶資料
+            </summary>
+            <param name="Seq"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CustomerController.Post(DemoWebAPI.Models.CustomerPostRequestModel)">
+            <summary>
+            新增客戶資料
+            </summary>
+            <param name="model">客戶資料</param>
+            <returns></returns>
+        </member>
+        <member name="M:CustomerController.Put(DemoWebAPI.Models.CustomerPutRequestModel)">
+            <summary>
+            修改客戶資料
+            </summary>
+            <param name="model">客戶資料</param>
+            <returns></returns>
+        </member>
+        <member name="M:CustomerController.Delete(System.Int32)">
+            <summary>
+            刪除客戶資料
+            </summary>
+            <param name="Seq"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

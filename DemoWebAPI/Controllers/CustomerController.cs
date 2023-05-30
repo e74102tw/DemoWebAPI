@@ -20,7 +20,10 @@ using System.Reflection;
 
 public class CustomerController : BaseApiController
 {
-    // GET: api/Customer
+    /// <summary>
+    /// 取得所有客戶資料
+    /// </summary>
+    /// <returns></returns>
     public ActionResponseModel<List<CustomerDataModel>> GetAllCustomers ()
     {
         string guid = Guid.NewGuid().ToString();
@@ -78,7 +81,11 @@ public class CustomerController : BaseApiController
         return resp;
     }
 
-    // GET: api/Customer/{Seq}
+    /// <summary>
+    /// 取得客戶資料
+    /// </summary>
+    /// <param name="Seq"></param>
+    /// <returns></returns>
     public ActionResponseModel<CustomerDataModel> Get(int Seq)
     {
         string guid = Guid.NewGuid().ToString();
@@ -136,7 +143,11 @@ public class CustomerController : BaseApiController
         return resp;
     }
 
-    // POST: api/Customer
+    /// <summary>
+    /// 新增客戶資料
+    /// </summary>
+    /// <param name="model">客戶資料</param>
+    /// <returns></returns>
     public ActionResponseModel<CustomerPostResponseModel> Post([FromBody] CustomerPostRequestModel model)
     {
         string guid = Guid.NewGuid().ToString();
@@ -204,7 +215,11 @@ public class CustomerController : BaseApiController
         return resp;
     }
 
-    // PUT: api/Customer
+    /// <summary>
+    /// 修改客戶資料
+    /// </summary>
+    /// <param name="model">客戶資料</param>
+    /// <returns></returns>
     public ActionResponseModel<CustomerPutResponseModel> Put([FromBody] CustomerPutRequestModel model)
     {
         string guid = Guid.NewGuid().ToString();
@@ -274,7 +289,11 @@ public class CustomerController : BaseApiController
         return resp;
     }
 
-    // DELETE: api/Customer/{Seq}
+    /// <summary>
+    /// 刪除客戶資料
+    /// </summary>
+    /// <param name="Seq"></param>
+    /// <returns></returns>
     public ActionResponseModel<int> Delete(int Seq)
     {
         string guid = Guid.NewGuid().ToString();
